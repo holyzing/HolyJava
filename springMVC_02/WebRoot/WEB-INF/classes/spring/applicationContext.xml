@@ -1,0 +1,69 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+	<!-- 引用java配置文件 在web工程下需要指定路径为classpath,而在java工程下则不用 -->
+	<context:property-placeholder location="classpath:db.properties"/>
+	<!-- 配置注解扫描路径 -->
+	<context:component-scan base-package="com.holy.service"></context:component-scan>
+	<!-- 配置数据源，使用c3p0连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${db.driver}" />
+		<property name="jdbcUrl" value="${db.url}" />
+		<property name="user" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+	<!-- spring管理sqlSessionFactory （单例） -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 由spring管理原始dao的实现 -->
+	<bean id="userDao" class="com.holy.dao.UserDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+    <!-- 1-配置事务管理器
+         2-配置事务织入的传播特性
+         3-配置事务的切入点
+     -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    	<tx:attributes>
+    		<tx:method name="save*" propagation="REQUIRED"/>
+		    <tx:method name="insert*" propagation="REQUIRED"/>
+		    <tx:method name="delete*" propagation="REQUIRED"/>
+		    <tx:method name="update*" propagation="REQUIRED"/>
+		    <tx:method name="edit" propagation="REQUIRED"/>
+		    <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+		    <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+    	</tx:attributes>
+    </tx:advice>
+    <aop:config>
+  		<aop:advisor advice-ref="txAdvice"
+  				  pointcut="execution(* com.holy.service.impl.*.*(..))"/>
+	</aop:config>
+	
+	<!-- MapperScannerConfigurer:
+			1：接口名和xml文件同名
+			2：每一个Mapper.xml的namespace必须为对应接口的全限定类名
+			3：每一个方法对应的sql的id必须为方法名
+			4：接口和对应的Mapper.xml必须位于同一目录下
+			5：MapperScannerConfigurer中自动注入上下文唯一的sqlSessionFactory,如果注入其它的则需要显式的指定
+		 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.holy.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+</beans>

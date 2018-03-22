@@ -1,0 +1,41 @@
+1-找不到handler说明没有扫到啊,这还能有啥问题呢?
+2-BeanDefinitionStoreException: Failed to read candidate component class:
+  java.lang.IllegalArgumentException
+	at org.springframework.asm.ClassReader.<init>(Unknown Source)
+	Spring与jdk版本的问题
+3-webservice支持json和xml 与服务器传递数据的轻量级格式 json
+	微信开发,公众平台的开发返回的都是xml格式的数据
+    MVC在注解开发中本身就支持json到pojo(pojodaojson)的序列化,当然,前提是spring控制
+    <mvc:annoation-driven>的开启,这意味着向适配器注入 json序列化的组件,当然也可以不
+    配置该标签,直接注入Jackon到适配器
+  3.1-jsonlib和Jackson 以及 fastjson 三种json解析框架 mvc集成了Jackson。 
+  	需要通过配置<mvc:annotation-driven/> 来创建并注入相关bin。
+    如果需要实现序列化和反序列化 则需要注解 requestBody和responseBody的声明。
+    如果不使用<mvc:annotation-driven/>则需要手动配置 requestMappingHandlerMapping
+    和 requestMappingHnadlerAdapter 并引入Jackson的jar在adapter注入messageConverters
+    
+    implement Controller ， implements HttpRequestHandler ， @Controller 
+    
+
+
+
+----------------------------------------------------
+待办：
+	mybatis的执行流程（源码跟踪）？   delegate
+	返回主键与insert在事物下的执行顺序？	     
+	junit的debug无效！！！  
+	mybatis缓存的机制原理  localcache
+	io和thread和collection
+	git忽略提交jar文件
+	bean的name属性？
+	复习servlet
+	spring的版本问题,加入注解就出现版本问题了 restController
+	适配器模式
+	-1L
+	1995-08-01 默认format(系统的)： 1995/2017/36
+	复习struts
+	project facts
+	因为 Eclipse 不支持 WebContent/WEB-INF/lib 下有分级目录,
+		jar包位于分级目录下会有找不到class的错误
+	注解处理器映射器和适配器共存，那么映射相同时会怎么选择？	
+    3-linux上更新版本库

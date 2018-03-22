@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="db.properties"></properties>
+	<settings>
+		<!-- adj. 侵略性的；好斗的；有进取心的；有闯劲的
+			lazyLoadingEnabled：启用，默认为false，即不启用
+			aggressiveLazyLoading:顾名思义，当为true时，懒加载的statement中任何一个属性（字段）的加载，
+								  都使得其它字段被加载,否则会按需加载
+		-->
+		<setting name="lazyLoadingEnabled" value="false"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+		<!-- 二级缓存总开关 -->
+		<setting name="cacheEnabled" value="true"/>
+	</settings>
+
+	<typeAliases>
+		<package name="com.holy.entity" />
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"> </transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="${db.driver}" />
+				<property name="url" value="${db.url}" />
+				<property name="username" value="${db.username}" />
+				<property name="password" value="${db.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<!-- 批量加载mapper文件，需要mapper接口文件和mapper映射文件名称相同且在同一个包下 -->
+		<package name="com.holy.mapper" />
+	</mappers>
+</configuration>

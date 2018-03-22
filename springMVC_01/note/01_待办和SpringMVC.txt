@@ -1,0 +1,38 @@
+						记忆力下降的厉害啊！感觉总是记不住东西，很多时候你要自己说服自己
+--------------------------------------------------------------------------
+待办：
+	mybatis的执行流程（源码跟踪）？   delegate
+	返回主键与insert在事物下的执行顺序？	     
+	junit的debug无效！！！  
+	mybatis缓存的机制原理  localcache
+	io和thread和collection
+	git忽略提交jar文件
+	bean的name属性？
+	复习servlet
+	spring的版本问题,加入注解就出现版本问题了 restController
+	适配器模式
+	-1L
+	1995-08-01 默认format(系统的)： 1995/2017/36
+	复习struts
+	project facts
+	因为 Eclipse 不支持 WebContent/WEB-INF/lib 下有分级目录,
+		jar包位于分级目录下会有找不到class的错误
+		
+    插件：sts project explore /package explore
+    全文检索  solr 和 lucene
+--------------------------------------------------
+1-test context-support 包是用来干啥的？
+2-springMVC:
+	1-基于servlet，为单例的，效率快
+	2-可进行原生态servlet的开发
+	3-参数封装是起初是通过命令模式封装的，而后直接注入到方法参数，
+		参数封装灵活，一个controller可封装多种类型
+  struts2
+    1-基于filter，为多例的，效率慢
+	2-进行原生态servlet开发失去其意义
+	3-是基于Action类中属性的封装，对于普通对象的参数封装得实现ModelDriven接口，
+	  对于接口，基本类型的封装得提供属性。这样导致Action内置对象过多 
+	  	ActionContext，valuestack，UserAction，ActionSuport，ModelDriven
+		userAction里面属性：User对象，userlist集合等
+	
+	

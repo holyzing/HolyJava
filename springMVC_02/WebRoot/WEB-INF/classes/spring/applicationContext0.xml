@@ -1,0 +1,60 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+	<!-- 引用java配置文件 在web工程下需要指定路径为classpath,而在java工程下则不用 -->
+	<context:property-placeholder location="classpath:db.properties" />
+
+	<!-- 配置数据源，使用dbcp连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<property name="maxActive" value="10" />
+		<property name="maxIdle" value="5" />
+	</bean>
+	<!-- spring管理sqlSessionFactory （单例） -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 注入配置 -->
+		<property name="configLocation" value="mybatis/sqlMapConfig.xml"></property>
+		<!-- 注入由spring管理的数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 由spring管理原始dao的实现 -->
+	<bean id="userDao" class="com.holy.dao.UserDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- Mapper代理开发方式有两种bean的定义方法 
+		 通过MapperFactoryBean创建代理对象（了解）
+		 存在问题：一个mapper定义一个bean，很麻烦。
+		 通过MapperScannerConfigurer批量扫描创建代理对象（掌握）
+		 -->
+	<!-- mapper代理开发方式之单个mapper配置 -->
+	<bean id="userMapperFromMapperFactoryBean" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.holy.mapper.UserMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- mapper代理开发方式之批量mapper配置 -->
+	<!-- bean的名字默认为mapper接口类名的首字母小写 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 指定批量mapper配置的包名 -->
+		<property name="basePackage" value="com.holy.mapper"></property>
+		<!-- 默认不需要配置sqlSessionFactory，会自动注入上下文的唯一sqlSessionFactory 
+		     如果不唯一，则需要显式的指定sqlSessionFactory 
+		-->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+</beans>

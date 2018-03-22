@@ -1,0 +1,70 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+		
+	<!-- 创建自定义controller -->
+	<bean id="helloContrllor" name="/hello.do" class="com.holy.controller.HelloController"></bean>
+	<bean id="httpRequestHandler" name="/request.do" class="com.holy.controller.RequestController"></bean>
+	<bean name="/command.do" class="com.holy.controller.CommandController"></bean>
+	<bean name="/add.do" class="com.holy.controller.JumpController"></bean>
+	<!--多种请求映射器可以共存
+			 BeanNameUrl:
+		     SimpleUrl:
+		     ControllerClassName: 根据Controller类名.do来访问,类名首字母小写
+	-->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"> </bean>
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings"><!-- java.util.Properties -->
+			<props>
+				<prop key="/hah.do">helloContrllor</prop>
+				<!-- 所有请求访问控制器bean的url必须以 .do结尾,因为web.xml.... -->
+				<prop key="/you.so">helloContrllor</prop>
+				<prop key="/do.do">httpRequestHandler</prop>
+			</props>
+		</property>
+	</bean>
+	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"></bean>
+	
+	<!--处理器适配器源码(适配器模式)
+		    supports(Object handler) {
+		    	//return (handler instanceof Controller);
+				return (handler instanceof HttpRequestHandler);
+	        }
+			handle(..., Object handler){
+				//return ((Controller) handler).handleRequest(request, response);
+				((HttpRequestHandler) handler).handleRequest(request, response);
+				return null;
+			}
+	     不同的适配器用来适配不同的controller ，比如 SimpleControllerHandlerAdapter只用来
+	     适配实现接口Controller的控制器，显然适配器也是可以共存的
+	-->
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>
+	<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"></bean>
+	
+	<!-- 视图解析器 UrlBasedViewResolver
+		 prefix ; suffix 
+	     buildView(String viewName){
+			....
+			view.setUrl(getPrefix() + viewName + getSuffix());
+			....
+		 }
+	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!-- 请求乱码：get解决方式，修改tomcat服务 servers.xml <Connector URIEncoding="UTF-8"
+	     post请求方式，在web端配置一个编码过滤器
+	-->
+</beans>
