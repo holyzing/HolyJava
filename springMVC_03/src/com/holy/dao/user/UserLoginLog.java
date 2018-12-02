@@ -11,8 +11,8 @@ public class UserLoginLog {
     private Integer ullid;         //登录日志id
     private Integer ulid;          //登录id
     private Integer loginWay;        //登录方式   （用户名登录）（手机号登录） （邮箱登录） （应用号授权登录）
+    private String loginTerminal;   //登录终端标识  什么手机/什么类型 比如 小米手机
     private Integer loginIp;         //登录IP
-    private String loginMachine;   //登录终端标识  什么手机/什么类型 比如 小米手机
     private Timestamp loginTime;   //登录时间
     private Integer loginResult;     //登录结果  （成功 失败：名字不对  密码不对  不存在）
     private String loginAddr;      //登录地点  (通过高德或者百度或者腾讯定位获得)
@@ -43,13 +43,13 @@ public class UserLoginLog {
     public void setLoginIp(Integer loginIp) {
         this.loginIp = loginIp;
     }
-    public String getLoginMachine() {
-        return loginMachine;
-    }
-    public void setLoginMachine(String loginMachine) {
-        this.loginMachine = loginMachine;
-    }
-    public Timestamp getLoginTime() {
+    public String getLoginTerminal() {
+		return loginTerminal;
+	}
+	public void setLoginTerminal(String loginTerminal) {
+		this.loginTerminal = loginTerminal;
+	}
+	public Timestamp getLoginTime() {
         return loginTime;
     }
     public void setLoginTime(Timestamp loginTime) {

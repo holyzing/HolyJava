@@ -63,7 +63,7 @@ public class UserLogin {
     private Short loginState;    //登录状态 （登录 断开 登出）
     private String headImageUrl; //头像
     private String token;		 //会话口令 或者说是sessionId
-    private Timestamp modifyTime;;//心跳刷新时间 
+    private Timestamp modifyTime;//心跳刷新时间 
     public Integer getUlid() {
         return ulid;
     }

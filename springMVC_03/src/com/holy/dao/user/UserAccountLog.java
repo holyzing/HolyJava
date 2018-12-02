@@ -10,52 +10,51 @@ import java.sql.Timestamp;
 public class UserAccountLog {
     private Integer ualid;        //主键
     private Integer ulid;         //登录id
-    private Integer changeReason; //变更原因  （充值 体现 付款 退款） （确定相关单据）
     private BigDecimal delta;     //变量
-    private Integer aboutId;      //相关单据id (可以小于零)
-    private Timestamp happenTime; //触发时间
-    private BigDecimal account;   //变更后账户余额
-    public Integer getUalid() {
-        return ualid;
-    }
-    public void setUalid(Integer ualid) {
-        this.ualid = ualid;
-    }
-    public Integer getUlid() {
-        return ulid;
-    }
-    public void setUlid(Integer ulid) {
-        this.ulid = ulid;
-    }
-    public Integer getChangeReason() {
-        return changeReason;
-    }
-    public void setChangeReason(Integer changeReason) {
-        this.changeReason = changeReason;
-    }
-    
-    public BigDecimal getDelta() {
+    private Integer source;       //变更原因  （充值 体现 付款 退款） （确定相关单据即相关表）
+    private Integer sourceSn;     //相关单据id (可以小于零)
+    private Timestamp triggerTime; //触发时间
+    private BigDecimal balance;    //变更后账户余额
+	public Integer getUalid() {
+		return ualid;
+	}
+	public void setUalid(Integer ualid) {
+		this.ualid = ualid;
+	}
+	public Integer getUlid() {
+		return ulid;
+	}
+	public void setUlid(Integer ulid) {
+		this.ulid = ulid;
+	}
+	public Integer getSource() {
+		return source;
+	}
+	public void setSource(Integer source) {
+		this.source = source;
+	}
+	public BigDecimal getDelta() {
 		return delta;
 	}
 	public void setDelta(BigDecimal delta) {
 		this.delta = delta;
 	}
-	public Integer getAboutId() {
-        return aboutId;
-    }
-    public void setAboutId(Integer aboutId) {
-        this.aboutId = aboutId;
-    }
-    public Timestamp getHappenTime() {
-        return happenTime;
-    }
-    public void setHappenTime(Timestamp happenTime) {
-        this.happenTime = happenTime;
-    }
-    public BigDecimal getAccount() {
-        return account;
-    }
-    public void setAccount(BigDecimal account) {
-        this.account = account;
-    }
+	public Integer getSourceSn() {
+		return sourceSn;
+	}
+	public void setSourceSn(Integer sourceSn) {
+		this.sourceSn = sourceSn;
+	}
+	public Timestamp getTriggerTime() {
+		return triggerTime;
+	}
+	public void setTriggerTime(Timestamp triggerTime) {
+		this.triggerTime = triggerTime;
+	}
+	public BigDecimal getBalance() {
+		return balance;
+	}
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
 }

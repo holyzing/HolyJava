@@ -21,18 +21,17 @@ public class UserInfor {
     private String email;    //邮箱
     private String idType;   //证件类型
     private String idNum;    //证件号码
-    private BigDecimal account;    //账户余额   伴生账户更新日志
-
-    //（写sql时注意区分出去）
-    private Timestamp modifyTime;  //最后修改时间
+    private BigDecimal balance;    //账户余额   伴生账户更新日志
 
     private Integer userGainPoint; //用户积分   伴生积分变动日志
     private Integer userRank;      //用户级别   伴生级别定义 （积分上下限区分级别）
+    //（写sql时注意区分出去）
+
 
     private Integer registState;       //注册状态   (后期可提出到注册表中)
     private Timestamp registTime;      //注册时间
-    private Timestamp registCanleTime; //注销时间
-
+    private Timestamp writeoffTime; //注销时间
+    private Timestamp modifyTime;  //最后修改时间
     public Integer getUiid() {
         return uiid;
     }
@@ -87,13 +86,13 @@ public class UserInfor {
     public void setIdNum(String idNum) {
         this.idNum = idNum;
     }
-    public BigDecimal getAccount() {
-        return account;
-    }
-    public void setAccount(BigDecimal account) {
-        this.account = account;
-    }
-    public Integer getUserGainPoint() {
+    public BigDecimal getBalance() {
+		return balance;
+	}
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+	public Integer getUserGainPoint() {
         return userGainPoint;
     }
     public void setUserGainPoint(Integer userGainPoint) {
@@ -117,16 +116,16 @@ public class UserInfor {
     public void setRegistState(Integer registState) {
         this.registState = registState;
     }
-    public Timestamp getRegistTime() {
+    public Timestamp getWriteoffTime() {
+		return writeoffTime;
+	}
+	public void setWriteoffTime(Timestamp writeoffTime) {
+		this.writeoffTime = writeoffTime;
+	}
+	public Timestamp getRegistTime() {
         return registTime;
     }
     public void setRegistTime(Timestamp registTime) {
         this.registTime = registTime;
-    }
-    public Timestamp getRegistCanleTime() {
-        return registCanleTime;
-    }
-    public void setRegistCanleTime(Timestamp registCanleTime) {
-        this.registCanleTime = registCanleTime;
     }
 }

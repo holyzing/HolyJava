@@ -7,16 +7,16 @@ import java.sql.Timestamp;
  * @author holy
  *
  */
+
 public class UserAddr {
     private Integer uaid;         //主键
     private Integer ulid;         //登录id
     private Integer zip;          //邮编
     private Integer provice;      //省份编号
     private Integer city;         //城市编号
-    private Integer area;         //区县编号
-    private String specific;      //具体地址
-    private Integer isDefault;    //是否默认
-    private Integer state;        //是否删除
+    private Integer district;         //区县编号
+    private String address;      //具体地址
+    private Integer state;        //默认 采用 删除 
 
     //这两项有是否选择当前登录用户的选项
     private String consignee;     //收货人
@@ -53,24 +53,19 @@ public class UserAddr {
     public void setCity(Integer city) {
         this.city = city;
     }
-    public Integer getArea() {
-        return area;
-    }
-    public void setArea(Integer area) {
-        this.area = area;
-    }
-    public String getSpecific() {
-        return specific;
-    }
-    public void setSpecific(String specific) {
-        this.specific = specific;
-    }
-    public Integer getIsDefault() {
-        return isDefault;
-    }
-    public void setIsDefault(Integer isDefault) {
-        this.isDefault = isDefault;
-    }
+    
+    public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public Integer getDistrict() {
+		return district;
+	}
+	public void setDistrict(Integer district) {
+		this.district = district;
+	}
     public Integer getState() {
         return state;
     }
