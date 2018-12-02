@@ -7,6 +7,7 @@
 *.log
 
 # Package Files #
+*/target/
 */WebRoot/WEB-INF/classes/
 *.jar
 *.war
@@ -30,3 +31,4 @@
 RemoteSystemsTempFiles/
 /.recommenders/
 Servers/*
+
