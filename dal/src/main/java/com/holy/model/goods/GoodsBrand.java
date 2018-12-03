@@ -4,57 +4,56 @@ import java.sql.Timestamp;
 
 public class GoodsBrand {
 	private Integer gbid; //主键
-	private String gtid;    //品牌类别 （衣服 ，食品，等）
-	private String name;    //品牌名称
-	private String logoUrl; //logo图片Url
-	private String remark; //品牌描述
-	private Integer state;     //品牌状态
-	private Integer order;    //排序
+	private Integer kindid;    //品牌类别 （衣服 ，食品，等）
+	private String brandName;    //品牌名称
+	private String brandLogo; //logo图片Url
+	private String brandDesc; //品牌描述
+	private Integer brandState;     //品牌状态
+	private Integer brandOrder;    //排序
 	private Timestamp modifyTime;//最后一次更新时间
 	private String telephone;  //电话号码   有啥意义？
-	private String web;        //品牌网络   有啥意义？
+	private String brandWeb;        //品牌网络   有啥意义？
 	public Integer getGbid() {
 		return gbid;
 	}
 	public void setGbid(Integer gbid) {
 		this.gbid = gbid;
 	}
-	public String getGtid() {
-		return gtid;
+	public Integer getKindid() {
+		return kindid;
 	}
-	public void setGtid(String gtid) {
-		this.gtid = gtid;
+	public void setKindid(Integer kindid) {
+		this.kindid = kindid;
 	}
-	public String getName() {
-		return name;
+	public String getBrandName() {
+		return brandName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
-	public String getLogoUrl() {
-		return logoUrl;
+	public String getBrandLogo() {
+		return brandLogo;
 	}
-	public void setLogoUrl(String logoUrl) {
-		this.logoUrl = logoUrl;
+	public void setBrandLogo(String brandLogo) {
+		this.brandLogo = brandLogo;
 	}
-
-	public String getRemark() {
-		return remark;
+	public String getBrandDesc() {
+		return brandDesc;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setBrandDesc(String brandDesc) {
+		this.brandDesc = brandDesc;
 	}
-	public Integer getState() {
-		return state;
+	public Integer getBrandState() {
+		return brandState;
 	}
-	public void setState(Integer state) {
-		this.state = state;
+	public void setBrandState(Integer brandState) {
+		this.brandState = brandState;
 	}
-	public Integer getOrder() {
-		return order;
+	public Integer getBrandOrder() {
+		return brandOrder;
 	}
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setBrandOrder(Integer brandOrder) {
+		this.brandOrder = brandOrder;
 	}
 	public Timestamp getModifyTime() {
 		return modifyTime;
@@ -68,11 +67,10 @@ public class GoodsBrand {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public String getWeb() {
-		return web;
+	public String getBrandWeb() {
+		return brandWeb;
 	}
-	public void setWeb(String web) {
-		this.web = web;
+	public void setBrandWeb(String brandWeb) {
+		this.brandWeb = brandWeb;
 	}
-	
 }
