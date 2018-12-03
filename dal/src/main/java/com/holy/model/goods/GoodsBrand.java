@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 public class GoodsBrand {
 	private Integer gbid; //主键
-	private String gtid;    //品牌类别 （衣服 ，食品，等）
-	private String name;    //品牌名称
+	private Integer kindid;    //品牌类别 （衣服 ，食品，等）
+	private String brandName;    //品牌名称
 	private String logoUrl; //logo图片Url
 	private String remark; //品牌描述
 	private Integer state;     //品牌状态
@@ -19,17 +19,17 @@ public class GoodsBrand {
 	public void setGbid(Integer gbid) {
 		this.gbid = gbid;
 	}
-	public String getGtid() {
-		return gtid;
+	public Integer getKindid() {
+		return kindid;
 	}
-	public void setGtid(String gtid) {
-		this.gtid = gtid;
+	public void setKindid(Integer kindid) {
+		this.kindid = kindid;
 	}
-	public String getName() {
-		return name;
+	public String getBrandName() {
+		return brandName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
 	public String getLogoUrl() {
 		return logoUrl;
