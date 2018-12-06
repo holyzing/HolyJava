@@ -75,7 +75,7 @@ CREATE TABLE `user_addr` (
   `state` TINYINT(4) NOT NULL COMMENT '状态 1-已删除 2-变更...',
   `consignee` VARCHAR(20) NOT NULL COMMENT '收货人',
   `telephone` INT(10) UNSIGNED DEFAULT NULL COMMENT '手机号',
-  `modified_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  `modify_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`uaid`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='用户地址表';
 
@@ -122,8 +122,60 @@ CREATE TABLE goods_brand(
   PRIMARY KEY pk_brandid (brand_id)
 )ENGINE=INNODB COMMENT '品牌信息表';
 -- ---------------------------------------------------------------------------------------
+CREATE TABLE goods_type(
+  gtid SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT '分类ID',
+  type_name VARCHAR(10) NOT NULL COMMENT '分类名称',
+  root TINYINT NOT NULL DEFAULT 1 COMMENT '是否是根类型',
+  last TINYINT NOT NULL DEFAULT 1 COMMENT '是否是最终类型',
+  father_id SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '父分类ID',
+  rank TINYINT NOT NULL DEFAULT 1 COMMENT '分类层级',
+  type_code VARCHAR(10) NOT NULL COMMENT '分类编码',
+  type_state TINYINT NOT NULL DEFAULT 1 COMMENT '分类状态',
+  modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '最后修改时间',
+  PRIMARY KEY pk_categoryid(category_id)
+)ENGINE=INNODB COMMENT '商品分类表'
 -- ---------------------------------------------------------------------------------------
+CREATE TABLE supplier(
+  sid INT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT '供应商ID',
+  name CHAR(50) NOT NULL COMMENT '供应商名称',
+  scale TINYINT NOT NULL COMMENT '供应商类型：1.自营，2.平台',
+  code CHAR(8) NOT NULL COMMENT '供应商编码',
+  corporation VARCHAR(10) NOT NULL COMMENT '供应商法人',
+  telephone VARCHAR(50) NOT NULL COMMENT '联系电话',
+  bank_name VARCHAR(50) NOT NULL COMMENT '供应商开户银行名称',
+  bank_account VARCHAR(50) NOT NULL COMMENT '银行账号',
+  address VARCHAR(200) NOT NULL COMMENT '供应商地址',
+  corporate_state TINYINT NOT NULL DEFAULT 0 COMMENT '状态：0禁止，1启用',
+  modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '最后修改时间',
+  PRIMARY KEY pk_supplierid(supplier_id)
+) ENGINE = innodb COMMENT '供应商信息表';
 -- ---------------------------------------------------------------------------------------
+CREATE TABLE product_info(
+  product_id INT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT '商品ID',
+  product_core CHAR(16) NOT NULL COMMENT '商品编码',
+  product_name VARCHAR(20) NOT NULL COMMENT '商品名称',
+  bar_code VARCHAR(50) NOT NULL COMMENT '国条码',
+  brand_id INT UNSIGNED NOT NULL COMMENT '品牌表的ID',
+  one_category_id SMALLINT UNSIGNED NOT NULL COMMENT '一级分类ID',
+  two_category_id SMALLINT UNSIGNED NOT NULL COMMENT '二级分类ID',
+  three_category_id SMALLINT UNSIGNED NOT NULL COMMENT '三级分类ID',
+  supplier_id INT UNSIGNED NOT NULL COMMENT '商品的供应商ID',
+  price DECIMAL(8,2) NOT NULL COMMENT '商品销售价格',
+  average_cost DECIMAL(18,2) NOT NULL COMMENT '商品加权平均成本',
+  publish_status TINYINT NOT NULL DEFAULT 0 COMMENT '上下架状态：0下架1上架',
+  audit_status TINYINT NOT NULL DEFAULT 0 COMMENT '审核状态：0未审核，1已审核',
+  weight FLOAT COMMENT '商品重量',
+  length FLOAT COMMENT '商品长度',
+  height FLOAT COMMENT '商品高度',
+  width FLOAT COMMENT '商品宽度',
+  color_type ENUM('红','黄','蓝','黑'),
+  production_date DATETIME NOT NULL COMMENT '生产日期',
+  shelf_life INT NOT NULL COMMENT '商品有效期',
+  descript TEXT NOT NULL COMMENT '商品描述',
+  indate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '商品录入时间',
+  modified_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  PRIMARY KEY pk_productid(product_id)
+) ENGINE = innodb COMMENT '商品信息表';
 -- ---------------------------------------------------------------------------------------
 -- ---------------------------------------------------------------------------------------
 -- ---------------------------------------------------------------------------------------
