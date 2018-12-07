@@ -15,7 +15,7 @@ public class Logistical {
 	private String remark;         // 备注描述
 	private Timestamp createTime;  // 创建时间
 	private Timestamp modifyTime;  // 最后一次更新时间
-	// 从物流单号中或者快递提供的接口：
+	// 从物流单号中获取快递提供的接口：
 	// 接手快递员 接手快递员号码 派件员 派件员电话号码
     public Integer getLid() {
         return lid;

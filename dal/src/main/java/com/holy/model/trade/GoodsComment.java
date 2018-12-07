@@ -15,9 +15,11 @@ public class GoodsComment {
 	private Integer uoid; //用户订单id
 	private Integer ulid;//用户
 	private Integer givenStar;// 评价星星 (标题)
-	private String comment; //评论内容 
+	private String title;
+	private String content; //评论内容 
 	private Integer state; //处理状态 （关闭，还是交互中）
 	private Timestamp commentTime;//评论时间
+	private Timestamp modifyTime;//修改时间
 	public Integer getGcid() {
 		return gcid;
 	}
@@ -37,22 +39,28 @@ public class GoodsComment {
 		this.uoid = uoid;
 	}
 	public Integer getUlid() {
-        return ulid;
-    }
-    public void setUlid(Integer ulid) {
-        this.ulid = ulid;
-    }
-    public Integer getGivenStar() {
+		return ulid;
+	}
+	public void setUlid(Integer ulid) {
+		this.ulid = ulid;
+	}
+	public Integer getGivenStar() {
 		return givenStar;
 	}
 	public void setGivenStar(Integer givenStar) {
 		this.givenStar = givenStar;
 	}
-	public String getComment() {
-		return comment;
+	public String getTitle() {
+		return title;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public Integer getState() {
 		return state;
@@ -65,6 +73,12 @@ public class GoodsComment {
 	}
 	public void setCommentTime(Timestamp commentTime) {
 		this.commentTime = commentTime;
+	}
+	public Timestamp getModifyTime() {
+		return modifyTime;
+	}
+	public void setModifyTime(Timestamp modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 	
 }

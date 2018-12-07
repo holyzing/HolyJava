@@ -17,11 +17,11 @@ public class GoodsStorageLog {
 	 */
 	private Integer gslid;        //主键
 	private Integer gid;          //货物id
-	private Double storage;       //仓储余量   (货物表也维护)
 	private Double delta;    	  //变动量
-	private Integer changeReason; //变更原因  （进货） （售货） （退货） （补货）
-	private Timestamp happenTime; //触发时间
-	private Integer abountId;     //相关单据    （进货单，售单）
+	private Double storage;       //仓储余量   (货物表也维护)
+	private Integer source; //变更原因  （进货） （售货） （退货） （补货）
+	private Integer sourceSn;     //相关单据    （进货单，售单）
+	private Timestamp triggerTime; //触发时间
 	private String remark;//备注
 	public Integer getGslid() {
 		return gslid;
@@ -35,36 +35,35 @@ public class GoodsStorageLog {
 	public void setGid(Integer gid) {
 		this.gid = gid;
 	}
-
-	public Double getStorage() {
-		return storage;
-	}
-	public void setStorage(Double storage) {
-		this.storage = storage;
-	}
 	public Double getDelta() {
 		return delta;
 	}
 	public void setDelta(Double delta) {
 		this.delta = delta;
 	}
-	public Integer getChangeReason() {
-		return changeReason;
+	public Double getStorage() {
+		return storage;
 	}
-	public void setChangeReason(Integer changeReason) {
-		this.changeReason = changeReason;
+	public void setStorage(Double storage) {
+		this.storage = storage;
 	}
-	public Timestamp getHappenTime() {
-		return happenTime;
+	public Integer getSource() {
+		return source;
 	}
-	public void setHappenTime(Timestamp happenTime) {
-		this.happenTime = happenTime;
+	public void setSource(Integer source) {
+		this.source = source;
 	}
-	public Integer getAbountId() {
-		return abountId;
+	public Integer getSourceSn() {
+		return sourceSn;
 	}
-	public void setAbountId(Integer abountId) {
-		this.abountId = abountId;
+	public void setSourceSn(Integer sourceSn) {
+		this.sourceSn = sourceSn;
+	}
+	public Timestamp getTriggerTime() {
+		return triggerTime;
+	}
+	public void setTriggerTime(Timestamp triggerTime) {
+		this.triggerTime = triggerTime;
 	}
 	public String getRemark() {
 		return remark;
@@ -72,4 +71,5 @@ public class GoodsStorageLog {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	
 }
