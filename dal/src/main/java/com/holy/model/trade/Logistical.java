@@ -10,10 +10,15 @@ public class Logistical {
     // 物流单号  运费金额  
 	private Integer lid;           // 主键
 	private Integer sid;           // staffid 员工id 处理员工
-	private String expressNum;     // 运单号
-	private BigDecimal cost;       // 运费
+	private String shippingSn;     // 运单号
+	private BigDecimal shippingMoney;       // 运费
 	private String remark;         // 备注描述
 	private Timestamp createTime;  // 创建时间
+	// 发货时间
+	// 收货时间
+	// 物流公司名称等
+	// 发货地址
+	// 收货地址等
 	private Timestamp modifyTime;  // 最后一次更新时间
 	// 从物流单号中获取快递提供的接口：
 	// 接手快递员 接手快递员号码 派件员 派件员电话号码
@@ -29,18 +34,18 @@ public class Logistical {
     public void setSid(Integer sid) {
         this.sid = sid;
     }
-    public String getExpressNum() {
-        return expressNum;
-    }
-    public void setExpressNum(String expressNum) {
-        this.expressNum = expressNum;
-    }
-    public BigDecimal getCost() {
-        return cost;
-    }
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
+    public String getShippingSn() {
+		return shippingSn;
+	}
+	public void setShippingSn(String shippingSn) {
+		this.shippingSn = shippingSn;
+	}
+	public BigDecimal getShippingMoney() {
+		return shippingMoney;
+	}
+	public void setShippingMoney(BigDecimal shippingMoney) {
+		this.shippingMoney = shippingMoney;
+	}
     public String getRemark() {
         return remark;
     }

@@ -17,8 +17,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`easygo` /*!40100 DEFAULT CHARACTER SET 
 USE `easygo`;
 
 -- ---------------------------------------------------------------------------------------
-/*Table structure for table `user_login` */
-
 DROP TABLE IF EXISTS `user_login`;
 
 CREATE TABLE `user_login` (
@@ -31,11 +29,7 @@ CREATE TABLE `user_login` (
   `modify_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`ulid`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='用户登录表';
-
-/*Data for the table `user_login` */
 -- ---------------------------------------------------------------------------------------
-/*Table structure for table `user_infor` */
-
 DROP TABLE IF EXISTS `user_infor`;
 
 CREATE TABLE `user_infor` (
@@ -157,7 +151,7 @@ CREATE TABLE goods(
   gt2id SMALLINT UNSIGNED NOT NULL COMMENT '二级分类ID',
   gt3id SMALLINT UNSIGNED NOT NULL COMMENT '三级分类ID',
 
-  storage FLOAT NOT NULL DEFAULT 0.0 COMMENT '库存余量', -- mybatis 中区分 还是分表。
+  STORAGE FLOAT NOT NULL DEFAULT 0.0 COMMENT '库存余量', -- mybatis 中区分 还是分表。
   waying FLOAT NOT NULL DEFAULT 0.0 COMMENT '在途量',
   occupying FLOAT NOT NULL DEFAULT 0.0 COMMENT '占用量',
 
@@ -167,7 +161,7 @@ CREATE TABLE goods(
 
   gbid INT UNSIGNED NOT NULL COMMENT '品牌表的ID',
 
-  name VARCHAR(20) NOT NULL COMMENT '商品名称',
+  NAME VARCHAR(20) NOT NULL COMMENT '商品名称',
   unit VARCHAR(5) NOT NULL COMMENT '计量单位',
   standard VARCHAR(10) NOT NULL COMMENT '规格',
   model VARCHAR(10) NOT NULL COMMENT '规格',
@@ -176,7 +170,7 @@ CREATE TABLE goods(
   len FLOAT COMMENT '商品长度',
   height FLOAT COMMENT '商品高度',
   width FLOAT COMMENT '商品宽度',
-  color varchar(15) comment '商品主色调',
+  color VARCHAR(15) COMMENT '商品主色调',
   product_date DATETIME NOT NULL COMMENT '生产日期',
   shelf_life INT NOT NULL COMMENT '商品有效期', -- 个月
   indate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '商品录入时间',
@@ -184,15 +178,15 @@ CREATE TABLE goods(
   verify_state TINYINT NOT NULL DEFAULT 0 COMMENT '审核状态：0未审核，1已审核',
   description TEXT NOT NULL COMMENT '商品描述',
   modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
-  code CHAR(16) NOT NULL COMMENT '商品编码',
+  CODE CHAR(16) NOT NULL COMMENT '商品编码',
   PRIMARY KEY (gid)
 ) ENGINE = INNODB COMMENT '商品信息表';
 -- ---------------------------------------------------------------------------------------
 CREATE TABLE goods_storage_log(
   gslid INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '商品库存变化log',
   gid INT UNSIGNED NOT NULL COMMENT '商品ID',
-  delta float UNSIGNED NOT NULL DEFAULT 0 COMMENT '变动量',
-  storage float UNSIGNED NOT NULL DEFAULT 0 COMMENT '变动前商品数量', -- 商品表中记录变动后商品数量
+  delta FLOAT UNSIGNED NOT NULL DEFAULT 0 COMMENT '变动量',
+  STORAGE FLOAT UNSIGNED NOT NULL DEFAULT 0 COMMENT '变动前商品数量', -- 商品表中记录变动后商品数量
   -- lock_cnt INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '当前占用数据',
   -- in_transit_cnt INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '在途数据',
   -- w_id SMALLINT UNSIGNED NOT NULL COMMENT '仓库ID',
@@ -201,7 +195,7 @@ CREATE TABLE goods_storage_log(
   trigger_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   remark VARCHAR(50) COMMENT '备注',
   PRIMARY KEY (gslid)
-)ENGINE = innodb COMMENT '商品库存表'
+)ENGINE = INNODB COMMENT '商品库存表'
 -- ---------------------------------------------------------------------------------------
 CREATE TABLE goods_image(
   giid INT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT '商品图片ID',
@@ -212,7 +206,7 @@ CREATE TABLE goods_image(
   description VARCHAR(50) COMMENT '图片描述',
   modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '最后修改时间',
   PRIMARY KEY (giid)
-)ENGINE=innodb COMMENT '商品图片信息表';
+)ENGINE=INNODB COMMENT '商品图片信息表';
 -- ---------------------------------------------------------------------------------------
 CREATE TABLE goods_comment(
   gcid INT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT '评论ID',
@@ -226,14 +220,59 @@ CREATE TABLE goods_comment(
   comment_time TIMESTAMP NOT NULL COMMENT '评论时间',
   modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (gcid)
-) ENGINE = innodb COMMENT '商品评论表';
+) ENGINE = INNODB COMMENT '商品评论表';
 -- ---------------------------------------------------------------------------------------
-CREATE TABLE shipping_info(
-  ship_id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  ship_name VARCHAR(20) NOT NULL COMMENT '物流公司名称',
-  ship_contact VARCHAR(20) NOT NULL COMMENT '物流公司联系人',
-  telephone VARCHAR(20) NOT NULL COMMENT '物流公司联系电话',
-  price DECIMAL(8,2) NOT NULL DEFAULT 0.00 COMMENT '配送价格',
-    modified_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+CREATE TABLE logistical(
+  lid TINYINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  sid INT UNSIGNED NOT NULL COMMENT '员工ID', -- 处理该次配送的员工
+  shipping_sn VARCHAR(20) NOT NULL COMMENT '运单号',
+  shipping_money DECIMAL(8,2) NOT NULL DEFAULT 0.00 COMMENT '配送价格',
+  remark VARCHAR(50) NOT NULL COMMENT '本次货运备注',
+  create_time TIMESTAMP NOT NULL COMMENT '员工录入时间(创建时间)',
+  modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY pk_shipid(ship_id)
-)ENGINE = innodb COMMENT '物流公司信息表';
+)ENGINE = INNODB COMMENT '物流公司信息表';
+-- ---------------------------------------------------------------------------------------
+CREATE TABLE user_order(
+  uoid INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+  uid INT UNSIGNED NOT NULL COMMENT '客户ID',
+  uaid INT UNSIGNED NOT NULL COMMENT '收货地址ID',
+  lid INT UNSIGNED NOT NULL COMMENT '本次物流ID',
+  order_sn VARCHAR(20) NOT NULL COMMENT '订单编号 yyyymmddnnnnnnnn',
+  pay_way TINYINT NOT NULL COMMENT '支付方式',
+  state TINYINT NOT NULL DEFAULT 0 COMMENT '订单状态',
+
+  order_money DECIMAL(8,2) NOT NULL COMMENT '订单金额',
+  discount_money DECIMAL(8,2) NOT NULL DEFAULT 0.00 COMMENT '优惠金额',
+  pay_money DECIMAL(8,2) NOT NULL DEFAULT 0.00 COMMENT '支付金额',
+
+  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '下单时间',
+  pay_time DATETIME COMMENT '支付时间',
+
+  reward_point INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单积分',
+  invoice_title VARCHAR(100) COMMENT '发票抬头',
+  modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  PRIMARY KEY (uoid)
+)ENGINE = INNODB COMMENT '订单主表';
+-- ---------------------------------------------------------------------------------------
+CREATE TABLE order_goods(
+  ogid INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '订单详情表ID',
+  oid INT UNSIGNED NOT NULL COMMENT '订单表ID',
+  gid INT UNSIGNED NOT NULL COMMENT '订单商品ID',
+  amount INT NOT NULL COMMENT '购买商品数量',
+  into_time TIMESTAMP NOT NULL COMMENT '加入购物车的时间',
+  modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  PRIMARY KEY (ogid)
+)ENGINE = INNODB COMMENT '订单详情表'
+-- ---------------------------------------------------------------------------------------
+CREATE TABLE goods_car(
+  gcid INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '购物车ID',
+  ulid INT UNSIGNED NOT NULL COMMENT '用户ID',
+  gid INT UNSIGNED NOT NULL COMMENT '商品ID',
+  amount INT NOT NULL COMMENT '加入购物车商品数量',
+  add_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入购物车时间',
+  modify_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  PRIMARY KEY (gcid)
+) ENGINE = INNODB COMMENT '购物车表';
+
+-- ---------------------------------------------------------------------------------------
