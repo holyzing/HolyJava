@@ -3,6 +3,8 @@ package com.holy.model.user;
 import java.sql.Timestamp;
 
 /**
+
+Linux下，java多环境配置，sudo update-alternatives --config java/javap 
  * 用户名密码登录方式
  * @author holy
  *  1-主键命名规则：取驼峰首字母加id
